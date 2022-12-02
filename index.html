@@ -16,36 +16,77 @@
 
         }
 
-        getComputerChoice();
+        //console.log(getComputerChoice());
+
+        const playerSelection = "rock";
+        //var computerSelection = getComputerChoice();
+        console.log(game());
 
         function playRound (playerSelection, computerSelection) {
             
             if (playerSelection.toLowerCase() === computerSelection) {
-                return ("Tie Game!");
+                //return ("Tie Game!");
+                return "tie";
             }
 
-            if (playerSelection.toLowerCase() === "rock" && computerSelection === "scissors") {
-                return (`You Win! ${playerSelection.toLowerCase()} beats ${computerSelection}`);
+            else if (playerSelection.toLowerCase() === "rock" && computerSelection === "scissors") {
+                //return (`You Win! ${playerSelection.toLowerCase()} beats ${computerSelection}`);
+                return "win";
             }
 
             else if (playerSelection.toLowerCase() === "paper" && computerSelection === "rock") {
-                return (`You Win! ${playerSelection.toLowerCase()} beats ${computerSelection}`);
+                //return (`You Win! ${playerSelection.toLowerCase()} beats ${computerSelection}`);
+                return "win";
             }
 
             else if (playerSelection.toLowerCase() === "scissors" && computerSelection === "paper") {
-                return (`You Win! ${playerSelection.toLowerCase()} beats ${computerSelection}`);
+                //return (`You Win! ${playerSelection.toLowerCase()} beats ${computerSelection}`);
+                return "win";
             }
             else {
-                return (`You Lose! ${computerSelection} beats ${playerSelection.toLowerCase()}`);
+                //return (`You Lose! ${computerSelection} beats ${playerSelection.toLowerCase()}`);
+                return "lose";
             }
         }
 
-        const playerSelection = "rock";
-        const computerSelection = getComputerChoice();
-        console.log(playRound(playerSelection,computerSelection));
+        function game() {
 
+            var playerScore = 0;
+            var computerScore = 0;
+            
+            //Need to play a new Round each time we go through the loop which is why we call gameOutcome inside the loop
+            
+            for (let i=0; i<5; i++) {
 
+                var gameOutcome = playRound(playerSelection, computerSelection = getComputerChoice());
 
+                if(gameOutcome === "tie"){
+
+                    playerScore += 0;
+                    computerScore += 0;
+                    console.log(`${playerSelection},${computerSelection}`)
+                    console.log(`${playerScore},${computerScore}`)
+                }
+
+                else if(gameOutcome === "win"){
+
+                    playerScore += 1;
+                    console.log(`${playerSelection},${computerSelection}`)
+                    console.log(`${playerScore},${computerScore}`)
+                }
+                else{
+
+                    computerScore += 1;
+                    console.log(`${playerSelection},${computerSelection}`)
+                    console.log(`${playerScore},${computerScore}`)
+                }
+            }
+
+            const result = (playerScore > computerScore) ? "You win!" : (playerScore === computerScore) ? "Tie!" : "Computer won!";
+            
+            return result;
+            console.log(`${playerScore},${computerScore}`)
+        }
 
     </script>
     
