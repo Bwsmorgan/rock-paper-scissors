@@ -7,7 +7,33 @@
     <script type="javascript" src="./rps.js"></script>
 </head>
 <body>
+    <button id="rock">ROCK</button>
+    <button id="paper">PAPER</button>
+    <button id="scissors">SCISSORS</button>
+
+    <div id="results">
+        SCORE
+    </div>
     <script>
+
+        const result = document.querySelector('#results');
+        results.setAttribute('style', 'border: solid red 2px; color: green');
+
+        const button = document.querySelectorAll('button');
+
+
+        button.forEach((button) => {
+
+            button.addEventListener('click', function(e) {
+
+                playRound((e.target).id, getComputerChoice());
+                console.log((e.target).id);
+                
+            })
+
+        })
+        
+
         function getComputerChoice() {
 
             var choices = ["rock","paper","scissors"];
@@ -18,11 +44,11 @@
 
         //console.log(getComputerChoice());
 
-        const playerSelection = prompt("Choose: rock, paper or scissors", "Enter your pick here");
+       // const playerSelection = prompt("Choose: rock, paper or scissors", "Enter your pick here");
         //var computerSelection = getComputerChoice();
-        console.log(game());
+        //console.log(game());
 
-        function playRound (playerSelection, computerSelection) {
+        function playRound (playerSelection, computerSelection = getComputerChoice()) {
             
             if (playerSelection.toLowerCase() === computerSelection) {
                 //return ("Tie Game!");
