@@ -19,26 +19,28 @@
         const result = document.querySelector('#results');
         results.setAttribute('style', 'border: solid red 2px; color: green');
 
+
         const button = document.querySelectorAll('button');
 
+        button.forEach((button)=> {
 
-        button.forEach((button) => {
+            button.addEventListener('click', function(){ 
 
-            button.addEventListener('click', function(e) {
-
-                playRound((e.target).id, getComputerChoice());
-                console.log((e.target).id);
-                
+                playRound(`${button.id}`,getComputerChoice())
             })
+                //return playRound(`${button.id}`, getComputerChoice);
+               // console.log(`${button.id}`)
+            });
 
-        })
         
 
         function getComputerChoice() {
+            
 
             var choices = ["rock","paper","scissors"];
             var computerChoice = choices[Math.floor(Math.random()*choices.length)];
             return computerChoice;
+            
 
         }
 
@@ -48,7 +50,9 @@
         //var computerSelection = getComputerChoice();
         //console.log(game());
 
-        function playRound (playerSelection, computerSelection = getComputerChoice()) {
+        function playRound (playerSelection = button, computerSelection = getComputerChoice()) {
+            console.log(computerSelection);
+            console.log(playerSelection);
             
             if (playerSelection.toLowerCase() === computerSelection) {
                 //return ("Tie Game!");
