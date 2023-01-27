@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script type="javascript" src="./rps.js"></script>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <button id="rock">ROCK</button>
-    <button id="paper">PAPER</button>
-    <button id="scissors">SCISSORS</button>
 
-    <div id="results">
-        SCORE
-
+    <div class="button-container">
+        <button id="rock">ROCK</button>
+        <button id="paper">PAPER</button>
+        <button id="scissors">SCISSORS</button>
     </div>
+    
+    <div class="score-container">
+        <div id="results"></div>
+    </div>
+    
     <script>
 
         let currentPlayerScore = 0;
