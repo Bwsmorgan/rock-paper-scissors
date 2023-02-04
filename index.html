@@ -4,33 +4,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script type="javascript" src="./rps.js"></script>
+    
     <link rel="stylesheet" href="./style.css">
+    <script type="javascript" src="./rps.js" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
+    
 </head>
 <body>
 
-    <div class="button-container">
-        <button id="rock">ROCK</button>
-        <button id="paper">PAPER</button>
-        <button id="scissors">SCISSORS</button>
+    <h1><em>ROCK PAPER SCISSOR</em></h1>
+
+    <div class="rps-button-container">
+        <button id="Rock"><img id="rock-img" src="./images/rock-white.png" alt="">ROCK</button>
+        <button id="Paper"><img id="rock-img" src="./images/paper-white.png" alt="">PAPER</button>
+        <button id="Scissors"><img id="rock-img" src="./images/scissors-white.png" alt="">SCISSORS</button>
     </div>
     
-    <div class="score-container">
+    <div id="score-container">
+        
         <div id="results"></div>
+        <div id="pc"></div>
+
+        <button class="new-game-btn">NEW GAME</button>
+
     </div>
-    
+
     <script>
 
         let currentPlayerScore = 0;
         let currentComputerScore = 0
 
-        const score = document.querySelector('#results');        
+        const score = document.querySelector('#pc');        
         const result = document.querySelector('#results');
-        
+
+        const gameOver = document.createElement('div');
+        gameOver.classList.add('gameOver');
+        gameOver.textContent = "SELECT AN OPTION";
+        result.appendChild(gameOver);
+
         const playerScore = document.createElement('div');
         playerScore.classList.add('playerScore');
         playerScore.textContent = "Player: " + `${currentPlayerScore}`;
         score.appendChild(playerScore);
+
 
         const computerScore = document.createElement('div');
         computerScore.classList.add('computerScore');
@@ -38,161 +57,130 @@
         score.appendChild(computerScore);
 
 
-        const button = document.querySelectorAll('button');
+        const button = document.querySelectorAll('.rps-button-container > button');
 
         button.forEach((button)=> {
 
-            button.addEventListener('click', function(){ 
+        button.addEventListener('click', function(){ 
 
-                playRound(`${button.id}`,getComputerChoice())
+            playRound(`${button.id}`,getComputerChoice())
+            
             });
         });
+
+        const newGame = document.querySelector('.new-game-btn')
+
+        newGame.addEventListener('click', function(){
+            
+            console.log("yes") 
+            console.log(computerScore)
+
+            currentPlayerScore = 0;
+            currentComputerScore = 0;
+
+            gameOver.textContent = "MAKE A SELECTION";
+            playerScore.textContent = "Player: " + `${0}`;
+            computerScore.textContent = "Computer: " + `${0}`;
+            
+
+        })
 
 
         function getComputerChoice() {
 
-            var choices = ["rock","paper","scissors"];
+            var choices = ["Rock","Paper","Scissors"];
             var computerChoice = choices[Math.floor(Math.random()*choices.length)];
             return computerChoice;
-        
+
         }
 
 
-        function playRound (playerSelection = button, computerSelection = getComputerChoice()) {
-            
-            console.log(computerSelection);
-            console.log(playerSelection);
+        function playRound (playerSelection, computerSelection = getComputerChoice()) {
 
-            
-            if (playerSelection.toLowerCase() === computerSelection) {
-                
-                const content = document.createElement('div');
-                content.classList.add('content');
-                content.textContent = 'Tie!';
-                result.appendChild(content);
+        console.log(computerSelection);
+        console.log(playerSelection);
 
+
+            if (playerSelection === computerSelection) {
+
+                currentPlayerScore += 0;
+                gameOver.textContent = "Tie Game!";
             }
 
-            else if (playerSelection.toLowerCase() === "rock" && computerSelection === "scissors") {
-                
-                const content = document.createElement('div');
-                content.classList.add('content');
-                content.textContent = 'You Win!';
-                result.appendChild(content);
+            else if ((playerSelection === "Rock" && computerSelection === "Scissors") || 
+                     (playerSelection === "Paper" && computerSelection === "Rock") ||
+                     (playerSelection === "Scissors" && computerSelection === "Paper")) {
 
                 currentPlayerScore += 1;
                 playerScore.textContent = "Player: " + `${currentPlayerScore}`;
-                
-                if(currentPlayerScore === 5){
-                    content.textContent = "GAME OVER! YOU WON!";
-                    result.appendChild(content);
-                    //console.log("game over")
-                }
-                
-            }
-
-            else if (playerSelection.toLowerCase() === "paper" && computerSelection === "rock") {
-                const content = document.createElement('div');
-                content.classList.add('content');
-                content.textContent = 'You Win!';
-                result.appendChild(content);
-
-                currentPlayerScore += 1;
-                playerScore.textContent = "Player: " + `${currentPlayerScore}`;
-
-                if(currentPlayerScore === 5){
-                    content.textContent = "GAME OVER! YOU WON!";
-                    result.appendChild(content);
-                    //console.log("game over")
-                }
-
-            }
-
-            else if (playerSelection.toLowerCase() === "scissors" && computerSelection === "paper") {
-                const content = document.createElement('div');
-                content.classList.add('content');
-                content.textContent = 'You Win!';
-                result.appendChild(content);
-
-                currentPlayerScore += 1;
-                playerScore.textContent = "Player: " + `${currentPlayerScore}`;
-
-                if(currentPlayerScore === 5){
-                    content.textContent = "GAME OVER! YOU WON!";
-                    result.appendChild(content);
-                    //console.log("game over")
-                }
-
+                checkScore(playerSelection, computerSelection, "You Won! ")
             }
 
             else {
-                const content = document.createElement('div');
-                content.classList.add('content');
-                content.textContent = 'You Lose!';
-                result.appendChild(content);
 
                 currentComputerScore += 1;
                 computerScore.textContent = "Computer: " + `${currentComputerScore}`;
-
-                if(currentComputerScore === 5){
-                    content.textContent = "GAME OVER! THE COMPUTER WON!";
-                    result.appendChild(content);
-                    //console.log("game over")
-                }
-                
+                checkScore(computerSelection, playerSelection, "You Lost! ")
             }
         }
 
-        function checkScore(){
+        function checkScore(winner, loser, message){
 
-            console.log('hi')
-            return
-            return currentComputerScore === 5 ? "Game Over. The computer won!" : null;
+            const outcome = (currentComputerScore === 5) ? 'Game over, you lost :(' 
+                            : (currentPlayerScore === 5) ? 'Game over, you won!' 
+                            : `${message}` + `${winner}` + " beats " +`${loser}` + ".";
+        
+            
+            gameOver.textContent = `${outcome}`;
 
+        
         }
-
         /*
 
         function game() {
 
-            var playerScore = 0;
-            var computerScore = 0;
-            
-            //Need to play a new Round each time we go through the loop which is why we call gameOutcome inside the loop
-            
-            for (let i=0; i<5; i++) {
+        var playerScore = 0;
+        var computerScore = 0;
 
-                var gameOutcome = playRound(playerSelection, computerSelection = getComputerChoice());
+        //Need to play a new Round each time we go through the loop which is why we call gameOutcome inside the loop
 
-                if(gameOutcome === "tie"){
+        for (let i=0; i<5; i++) {
 
-                    playerScore += 0;
-                    computerScore += 0;
-                    console.log(`${playerSelection},${computerSelection}`)
-                    console.log(`${playerScore},${computerScore}`)
-                }
+        var gameOutcome = playRound(playerSelection, computerSelection = getComputerChoice());
 
-                else if(gameOutcome === "win"){
+        if(gameOutcome === "tie"){
 
-                    playerScore += 1;
-                    console.log(`${playerSelection},${computerSelection}`)
-                    console.log(`${playerScore},${computerScore}`)
-                }
-                else{
-
-                    computerScore += 1;
-                    console.log(`${playerSelection},${computerSelection}`)
-                    console.log(`${playerScore},${computerScore}`)
-                }
-            }
-
-            const result = (playerScore > computerScore) ? "You win!" : (playerScore === computerScore) ? "Tie!" : "Computer won!";
-            
-            return result;
+            playerScore += 0;
+            computerScore += 0;
+            console.log(`${playerSelection},${computerSelection}`)
             console.log(`${playerScore},${computerScore}`)
+        }
+
+        else if(gameOutcome === "win"){
+
+            playerScore += 1;
+            console.log(`${playerSelection},${computerSelection}`)
+            console.log(`${playerScore},${computerScore}`)
+        }
+        else{
+
+            computerScore += 1;
+            console.log(`${playerSelection},${computerSelection}`)
+            console.log(`${playerScore},${computerScore}`)
+        }
+        }
+
+        const result = (playerScore > computerScore) ? "You win!" : (playerScore === computerScore) ? "Tie!" : "Computer won!";
+
+        return result;
+        console.log(`${playerScore},${computerScore}`)
         }*/
 
+
+
+
     </script>
+    
     
 </body>
 </html>
