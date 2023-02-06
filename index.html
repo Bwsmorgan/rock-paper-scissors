@@ -18,14 +18,18 @@
     <h1><em>ROCK PAPER SCISSOR</em></h1>
 
     <div class="rps-button-container">
-        <button id="Rock"><img id="rock-img" src="./images/rock-white.png" alt="">ROCK</button>
-        <button id="Paper"><img id="rock-img" src="./images/paper-white.png" alt="">PAPER</button>
-        <button id="Scissors"><img id="rock-img" src="./images/scissors-white.png" alt="">SCISSORS</button>
+        <button id="Rock"><img id="rock-img" src="./images/Untitled-1-02.png" alt="">ROCK</button>
+        <button id="Paper"><img id="paper-img" src="./images/Untitled-1-03.png" alt="">PAPER</button>
+        <button id="Scissor"><img id="scissor-img" src="./images/Untitled-1-04.png" alt="">SCISSORS</button>
     </div>
     
     <div id="score-container">
+
+        <div id="msg-container">
+            <div id="results"></div>
+            <div id="gameFinal"></div>
+        </div>
         
-        <div id="results"></div>
         <div id="pc"></div>
 
         <button class="new-game-btn">NEW GAME</button>
@@ -39,11 +43,17 @@
 
         const score = document.querySelector('#pc');        
         const result = document.querySelector('#results');
+        const gameDone = document.querySelector("#gameFinal");
 
         const gameOver = document.createElement('div');
         gameOver.classList.add('gameOver');
         gameOver.textContent = "SELECT AN OPTION";
         result.appendChild(gameOver);
+
+        const finalMsg = document.createElement('div');
+        finalMsg.classList.add('finalMsg');
+        finalMsg.textContent = " ";
+        gameDone.appendChild(finalMsg);
 
         const playerScore = document.createElement('div');
         playerScore.classList.add('playerScore');
@@ -63,6 +73,8 @@
 
         button.addEventListener('click', function(){ 
 
+            finalMsg.textContent = " ";
+
             playRound(`${button.id}`,getComputerChoice())
             
             });
@@ -78,10 +90,11 @@
             currentPlayerScore = 0;
             currentComputerScore = 0;
 
+            finalMsg.textContent = " ";
+
             gameOver.textContent = "MAKE A SELECTION";
             playerScore.textContent = "Player: " + `${0}`;
             computerScore.textContent = "Computer: " + `${0}`;
-            
 
         })
 
@@ -126,14 +139,23 @@
 
         function checkScore(winner, loser, message){
 
-            const outcome = (currentComputerScore === 5) ? 'Game over, you lost :(' 
-                            : (currentPlayerScore === 5) ? 'Game over, you won!' 
-                            : `${message}` + `${winner}` + " beats " +`${loser}` + ".";
+            const outcome = `${message}` + `${winner}` + " beats " +`${loser}` + ".";
         
-            
-            gameOver.textContent = `${outcome}`;
+            const game = (currentComputerScore === 5) ? 'Game over, you lost :('
+                            : (currentPlayerScore === 5) ? 'Game over, you won! :)'
+                            : "";
 
-        
+
+            gameOver.textContent = `${outcome}`;
+            finalMsg.textContent = `${game}`;
+
+            if (currentComputerScore === 5 || currentPlayerScore == 5){
+                currentPlayerScore = 0;
+                currentComputerScore = 0;
+                playerScore.textContent = "Player: " + `${0}`;
+                computerScore.textContent = "Computer: " + `${0}`;
+            
+            }
         }
         /*
 
