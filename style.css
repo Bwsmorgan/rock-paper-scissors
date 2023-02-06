@@ -33,7 +33,7 @@ h1 {
     display: flex;
     
     height: 50vh;
-    width: 1000px;
+    width: 800px;
     align-items: center;
     justify-content: space-between;
     
@@ -41,23 +41,43 @@ h1 {
 }
 
 .rps-button-container > button {
-    height: 300px;
-    width: 300px;  
+    height: 250px;
+    width: 250px;  
 
     background-color: transparent;
     border: none;
 
 }
 
+.rps-button-container > button:hover{
+    background: var(--clr-neon);
+    color:var(--clr-bg);
+    text-shadow: none;
+
+}
 
 
 #rock-img{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    height: 200px;
-    width: 200px;
+    position: relative;
+    max-height: 200px;
+    max-width: 200px;
+    transform: translate(-12%,2%);
 }
+
+#paper-img{
+    position: relative;
+    max-height: 200px;
+    max-width: 200px;
+    transform: translate(-8%,1%);
+}
+
+#scissor-img{
+    position: relative;
+    max-height: 200px;
+    max-width: 200px;
+    transform: translate(-13%,7%);
+}
+
 
 #score-container {
     
