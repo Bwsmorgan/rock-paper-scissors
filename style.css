@@ -3,59 +3,45 @@
     --clr-bg: hsl(323 21% 16%);
 }
 
-body{
+body {
     background: radial-gradient(rgb(84,81,80), rgb(31,31,31));
     color: var(--clr-neon);
     font-family: 'Libre Franklin', sans-serif;
-
     text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.5),
                  0 0 0.45em currentColor;
-
 }
 
 h1 {
-
-    font-size: 3rem;
-
     display: flex;
-    justify-content: center;
-    align-items: center;
-   
     height: 50px;
     margin: 20px 0 auto;
-
+    font-size: 3rem;
+    justify-content: center;
+    align-items: center;
 }
 
 .rps-button-container {
+    display: flex;
     margin: auto;
     margin-top: 20px;
-
-    display: flex;
-    
     height: 50vh;
     width: 800px;
     align-items: center;
     justify-content: space-between;
-    
-    
 }
 
 .rps-button-container > button {
     height: 250px;
     width: 250px;  
-
     background-color: transparent;
     border: none;
-
 }
 
-.rps-button-container > button:hover{
+.rps-button-container > button:hover {
     background: var(--clr-neon);
     color:var(--clr-bg);
     text-shadow: none;
-
 }
-
 
 #rock-img{
     position: relative;
@@ -71,33 +57,24 @@ h1 {
     transform: translate(-8%,1%);
 }
 
-#scissor-img{
+#scissors-img{
     position: relative;
     max-height: 200px;
     max-width: 200px;
     transform: translate(-13%,7%);
 }
 
-
-#score-container {
-    
+.game-container {
     margin:auto;
     display: flex;
     flex-direction: column;
-    
     width: 300px;
     height: 180px;
     align-items: center;
     justify-content: space-between;
 }
 
-#pc{
-    display: flex;
-    
-    width: 250px;
-}
-
-#results {
+#game-outcome {
     display: flex;
     height: 20px;
     width: 18rem;
@@ -105,11 +82,16 @@ h1 {
     text-align: center;
 }
 
-#gameFinal{
+#game-over{
     margin-top: 0;
     height: 20px;
     width: 18rem;
     text-align: center;
+}
+
+#current-score{
+    display: flex; 
+    width: 250px;
 }
 
 .computerScore, .playerScore{
