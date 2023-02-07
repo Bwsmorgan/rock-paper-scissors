@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock Paper Scissor Game</title>
     
     <link rel="stylesheet" href="./style.css">
     <script type="javascript" src="./rps.js" defer></script>
@@ -18,19 +18,23 @@
     <h1><em>ROCK PAPER SCISSOR</em></h1>
 
     <div class="rps-button-container">
-        <button id="Rock"><img id="rock-img" src="./images/Untitled-1-02.png" alt="">ROCK</button>
-        <button id="Paper"><img id="paper-img" src="./images/Untitled-1-03.png" alt="">PAPER</button>
-        <button id="Scissor"><img id="scissor-img" src="./images/Untitled-1-04.png" alt="">SCISSORS</button>
+
+        <button id="Rock"><img id="rock-img" src="./images/rock-img.png" alt="">ROCK</button>
+        <button id="Paper"><img id="paper-img" src="./images/paper-img.png" alt="">PAPER</button>
+        <button id="Scissor"><img id="scissor-img" src="./images/scissor-img.png" alt="">SCISSORS</button>
+    
     </div>
     
-    <div id="score-container">
+    <div class="game-container">
 
         <div id="msg-container">
-            <div id="results"></div>
-            <div id="gameFinal"></div>
+
+            <div id="game-outcome"></div>
+            <div id="game-over"></div>
+        
         </div>
         
-        <div id="pc"></div>
+        <div id="current-score"></div>
 
         <button class="new-game-btn">NEW GAME</button>
 
@@ -41,30 +45,29 @@
         let currentPlayerScore = 0;
         let currentComputerScore = 0
 
-        const score = document.querySelector('#pc');        
-        const result = document.querySelector('#results');
-        const gameDone = document.querySelector("#gameFinal");
-
-        const gameOver = document.createElement('div');
-        gameOver.classList.add('gameOver');
-        gameOver.textContent = "SELECT AN OPTION";
-        result.appendChild(gameOver);
-
-        const finalMsg = document.createElement('div');
-        finalMsg.classList.add('finalMsg');
-        finalMsg.textContent = " ";
-        gameDone.appendChild(finalMsg);
+        const score = document.querySelector('#current-score');        
+        const results = document.querySelector('#game-outcome');
+        const gameOver = document.querySelector('#game-over');
 
         const playerScore = document.createElement('div');
         playerScore.classList.add('playerScore');
         playerScore.textContent = "Player: " + `${currentPlayerScore}`;
         score.appendChild(playerScore);
 
-
         const computerScore = document.createElement('div');
         computerScore.classList.add('computerScore');
         computerScore.textContent = "Computer: " + `${currentComputerScore}`;
         score.appendChild(computerScore);
+
+        const currentGameDetails = document.createElement('div');
+        currentGameDetails.classList.add('currentGameDetails');
+        currentGameDetails.textContent = "MAKE A SELECTION";
+        results.appendChild(currentGameDetails);
+
+        const finalGameDetails = document.createElement('div');
+        finalGameDetails.classList.add('finalGameDetails');
+        finalGameDetails.textContent = " ";
+        gameOver.appendChild(finalGameDetails);
 
 
         const button = document.querySelectorAll('.rps-button-container > button');
@@ -73,9 +76,9 @@
 
         button.addEventListener('click', function(){ 
 
-            finalMsg.textContent = " ";
+            finalGameDetails.textContent = " ";
 
-            playRound(`${button.id}`,getComputerChoice())
+            playRound(`${button.id}`,getComputerSelection())
             
             });
         });
@@ -83,41 +86,34 @@
         const newGame = document.querySelector('.new-game-btn')
 
         newGame.addEventListener('click', function(){
-            
-            console.log("yes") 
-            console.log(computerScore)
 
             currentPlayerScore = 0;
             currentComputerScore = 0;
 
-            finalMsg.textContent = " ";
+            finalGameDetails.textContent = " ";
 
-            gameOver.textContent = "MAKE A SELECTION";
+            currentGameDetails.textContent = "MAKE A SELECTION";
             playerScore.textContent = "Player: " + `${0}`;
             computerScore.textContent = "Computer: " + `${0}`;
 
         })
 
 
-        function getComputerChoice() {
+        function getComputerSelection() {
 
-            var choices = ["Rock","Paper","Scissors"];
-            var computerChoice = choices[Math.floor(Math.random()*choices.length)];
-            return computerChoice;
+            var selection = ["Rock","Paper","Scissors"];
+            var computerSelection = selection[Math.floor(Math.random()*selection.length)];
+            return computerSelection;
 
         }
 
+        
+        function playRound (playerSelection, computerSelection = getComputerSelection()) {
 
-        function playRound (playerSelection, computerSelection = getComputerChoice()) {
-
-        console.log(computerSelection);
-        console.log(playerSelection);
-
-
+            //currentPlayerScore and currentComputerScore do not need to be incremented when there is a tie game
             if (playerSelection === computerSelection) {
 
-                currentPlayerScore += 0;
-                gameOver.textContent = "Tie Game!";
+                currentGameDetails.textContent = "Tie Game!";
             }
 
             else if ((playerSelection === "Rock" && computerSelection === "Scissors") || 
@@ -126,83 +122,40 @@
 
                 currentPlayerScore += 1;
                 playerScore.textContent = "Player: " + `${currentPlayerScore}`;
-                checkScore(playerSelection, computerSelection, "You Won! ")
+                checkScore("You Won! ", playerSelection, computerSelection);
             }
 
             else {
 
                 currentComputerScore += 1;
                 computerScore.textContent = "Computer: " + `${currentComputerScore}`;
-                checkScore(computerSelection, playerSelection, "You Lost! ")
+                checkScore("You Lost! ", computerSelection, playerSelection);
             }
         }
 
-        function checkScore(winner, loser, message){
 
-            const outcome = `${message}` + `${winner}` + " beats " +`${loser}` + ".";
+        function checkScore(message, winner, loser){
+
+            const currentOutcome = `${message}` + `${winner}` + " beats " +`${loser}` + ".";
         
-            const game = (currentComputerScore === 5) ? 'Game over, you lost :('
-                            : (currentPlayerScore === 5) ? 'Game over, you won! :)'
+            const finalOutcome = (currentComputerScore === 5) ? 'GAME OVER, YOU LOST. :('
+                            : (currentPlayerScore === 5) ? 'GAME OVER, YOU WON! :)'
                             : "";
 
 
-            gameOver.textContent = `${outcome}`;
-            finalMsg.textContent = `${game}`;
+            currentGameDetails.textContent = `${currentOutcome}`;
+            finalGameDetails.textContent = `${finalOutcome}`;
 
             if (currentComputerScore === 5 || currentPlayerScore == 5){
+
                 currentPlayerScore = 0;
                 currentComputerScore = 0;
                 playerScore.textContent = "Player: " + `${0}`;
                 computerScore.textContent = "Computer: " + `${0}`;
-            
+
             }
         }
-        /*
-
-        function game() {
-
-        var playerScore = 0;
-        var computerScore = 0;
-
-        //Need to play a new Round each time we go through the loop which is why we call gameOutcome inside the loop
-
-        for (let i=0; i<5; i++) {
-
-        var gameOutcome = playRound(playerSelection, computerSelection = getComputerChoice());
-
-        if(gameOutcome === "tie"){
-
-            playerScore += 0;
-            computerScore += 0;
-            console.log(`${playerSelection},${computerSelection}`)
-            console.log(`${playerScore},${computerScore}`)
-        }
-
-        else if(gameOutcome === "win"){
-
-            playerScore += 1;
-            console.log(`${playerSelection},${computerSelection}`)
-            console.log(`${playerScore},${computerScore}`)
-        }
-        else{
-
-            computerScore += 1;
-            console.log(`${playerSelection},${computerSelection}`)
-            console.log(`${playerScore},${computerScore}`)
-        }
-        }
-
-        const result = (playerScore > computerScore) ? "You win!" : (playerScore === computerScore) ? "Tie!" : "Computer won!";
-
-        return result;
-        console.log(`${playerScore},${computerScore}`)
-        }*/
-
-
-
-
     </script>
-    
-    
+
 </body>
 </html>
