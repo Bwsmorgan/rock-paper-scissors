@@ -1,4 +1,4 @@
-# Rock, Paper, Scissors
+##Rock, Paper, Scissors
 Description: a simple implementation of the classic “rock paper scissors" game
 
 Overview:
